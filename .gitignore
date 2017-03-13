@@ -2,3 +2,5 @@
 node_modules
 dist
 !dist/.gitkeep
+css/style.css
+css/build.css
