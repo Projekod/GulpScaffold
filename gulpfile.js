@@ -1,13 +1,6 @@
 var app, concat, gulp, gutil, sass, uglify, imagemin, minifyCSS,
-    browserSync, autoprefixer, gulpSequence, shell, sourceMaps, plumber, cleanCSS, uncss;
+    browserSync, autoprefixer, gulpSequence, shell, sourceMaps, plumber, cleanCSS, uncss, staticHash,version;
 var autoPrefixBrowserList = ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'];
-
-var cssFiles = [
-    'src/css/inc/bootstrap.min.css',
-    'src/css/inc/font-awesome.min.css',
-    'src/css/style.css',
-    'src/css/custom.css'
-];
 
 gulp = require('gulp');
 gutil = require('gulp-util');
@@ -24,6 +17,23 @@ shell = require('gulp-shell');
 plumber = require('gulp-plumber');
 cleanCSS = require('gulp-clean-css');
 uncss = require('gulp-uncss');
+staticHash = require('gulp-static-hash');
+version = require('gulp-version-number');
+
+var cssFiles = [
+    'src/css/inc/bootstrap.min.css',
+    'src/css/inc/font-awesome.min.css',
+    'src/css/style.css',
+    'src/css/custom.css'
+];
+
+var versionConfig = {
+    "value": "%MD5%",
+    "append": {
+        "key": "_vh",
+        "to": ["css", "js"]
+    }
+};
 
 gulp.task('browserSync', function () {
     browserSync({
@@ -127,9 +137,11 @@ gulp.task('html', function () {
 });
 
 gulp.task('html-deploy', function () {
-    // gulp.src('src/*')
-    //     .pipe(plumber())
-    //     .pipe(gulp.dest('dist'));
+
+    gulp.src('src/**/*.html')
+        .pipe(plumber())
+        .pipe(version(versionConfig))
+        .pipe(gulp.dest('dist'));
 
     gulp.src('src/fonts/**/*')
         .pipe(plumber())
@@ -143,7 +155,6 @@ gulp.task('html-deploy', function () {
         .pipe(plumber())
         .pipe(gulp.dest('dist/images'));
 
-    //TODO: Move html files to dist directory
 });
 
 gulp.task('clean', function () {
