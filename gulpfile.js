@@ -95,7 +95,7 @@ gulp.task('scripts', function () {
         .pipe(plumber())
         .pipe(concat('build.js'))
         .on('error', gutil.log)
-        .pipe(gulp.dest('dist/js'))
+        .pipe(gulp.dest('src/js'))
         .pipe(browserSync.reload({stream: true}));
 });
 
