@@ -93,7 +93,7 @@ gulp.task('css-deploy', function () {
 gulp.task('scripts', function () {
     return gulp.src(['src/js/custom.js', 'src/js/src/**/*.js'])
         .pipe(plumber())
-        .pipe(concat('app.js'))
+        .pipe(concat('build.js'))
         .on('error', gutil.log)
         .pipe(gulp.dest('dist/js'))
         .pipe(browserSync.reload({stream: true}));
@@ -102,8 +102,9 @@ gulp.task('scripts', function () {
 gulp.task('scripts-deploy', function () {
     return gulp.src(['src/js/custom.js', 'src/js/src/**/*.js'])
         .pipe(plumber())
+        .pipe(concat('build.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('dist/scripts'));
+        .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('sass', function () {
