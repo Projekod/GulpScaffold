@@ -16,6 +16,7 @@
     "gulp-sequence": "^0.4.6",
     "gulp-shell": "^0.5.2",
     "gulp-sourcemaps": "^2.4.1",
+    "gulp-static-hash": "^0.1.4",
     "gulp-uglify": "^2.0.1",
     "gulp-uncss": "^1.0.6",
     "gulp-util": "^3.0.8",
