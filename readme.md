@@ -1,4 +1,5 @@
-#[TÜRKÇE]
+[TÜRKÇE]
+===
 
 Basit html şablonlar oluşturmak ve assetleri organize eden 
 gulp ortamı
@@ -22,10 +23,11 @@ gulp
 ```
 gulp deploy
 ```
-*Çıktı dosyaları `dist` klasörü içerisine otomatik olarak yüklenir.
+*Çıktı dosyaları `dist` klasörü içerisine otomatik olarak yüklenir.*
 
 
-###Özellikler
+##Özellikler
+
 
 * Sass Derleme
 * Css Küçültme ve sıkıştırma 
