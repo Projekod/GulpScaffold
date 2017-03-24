@@ -26,7 +26,7 @@ gulp deploy
 *Çıktı dosyaları `dist` klasörü içerisine otomatik olarak yüklenir.*
 
 
-##Özellikler
+## Özellikler
 
 * Sass Derleme
 * Css Küçültme ve sıkıştırma 
@@ -36,7 +36,7 @@ gulp deploy
 * Tarayıcıda Anlık değişiklik izleme (browsersync)
 * Html dosyaları içinde kullanılmayan sınıfları css dosyasından çıkarma 
 
-##İçindekiler
+## İçindekiler
 
 `src/css/inc` dizini içerisine istediğiniz şekilde kütüphane ekleyip,
 `gulpfile.js` dosyası içerisindeki `cssFiles` değişkenine kendi kütüphanelerinizi ekleyebilirsiniz.
