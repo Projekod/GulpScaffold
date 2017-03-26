@@ -1,3 +1,42 @@
+[ENGLISH]
+===
+Yet another Gulp scaffolding repository for simple html projects Edit
+
+**Download :**
+```
+git clone https://github.com/Projekod/GulpScaffold.git <dizinadı>
+cd dizinadı
+npm install
+```
+**Development :**
+
+```
+gulp
+```
+
+**Deploy :**
+
+```
+gulp deploy
+```
+*After this command, all files created the `dist` folder.
+
+## Features
+
+* Sass Compile (Watch)
+* Css minify and compress 
+* Image optimize
+* Automatic Hash Version assets links
+* Javascript minify and compress
+* Browsersync
+* Delete unsed css class in build.css file. 
+
+## Include
+
+* Bootstrap
+* Fontawesome
+
+
 [TÜRKÇE]
 ===
 
