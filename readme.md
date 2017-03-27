@@ -4,8 +4,8 @@ Yet another Gulp scaffolding repository for simple html projects Edit
 
 **Download :**
 ```
-git clone https://github.com/Projekod/GulpScaffold.git <dizinadı>
-cd dizinadı
+git clone https://github.com/Projekod/GulpScaffold.git <folder_name>
+cd folder_name
 npm install
 ```
 **Development :**
