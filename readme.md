@@ -1,6 +1,6 @@
 [ENGLISH]
 ===
-Yet another Gulp scaffolding repository for simple html projects Edit
+Yet another Gulp scaffolding repository for simple html projects
 
 **Download :**
 ```
