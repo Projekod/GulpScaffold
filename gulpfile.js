@@ -164,6 +164,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('default', ['browserSync', 'scripts', 'sass', 'css'], function () {
+    gulp.start(['scripts','sass','html','css']);
     gulp.watch('src/js/**', ['scripts']);
     gulp.watch('src/css/**', ['css']);
     gulp.watch('src/sass/**', ['sass']);
