@@ -1,6 +1,6 @@
 {
   "name": "GulpScaffold",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Yet another Gulp scaffolding repository for simple html projects",
   "dependencies": {},
   "devDependencies": {
