@@ -1,5 +1,5 @@
 var  concat, gulp, gutil, sass, uglify, imagemin,
-    browserSync, autoprefixer, gulpSequence, shell, plumber, cleanCSS, uncss, staticHash,version;
+    browserSync, autoprefixer, gulpSequence, shell, plumber, cleanCSS, uncss, staticHash,version,nunjucksRender;
 var autoPrefixBrowserList = ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'];
 
 gulp = require('gulp');
@@ -17,6 +17,7 @@ cleanCSS = require('gulp-clean-css');
 uncss = require('gulp-uncss');
 staticHash = require('gulp-static-hash');
 version = require('gulp-version-number');
+nunjucksRender = require('gulp-nunjucks-render');
 
 var cssFiles = [
     'src/css/inc/bootstrap.min.css',
@@ -36,7 +37,7 @@ var versionConfig = {
 gulp.task('browserSync', function () {
     browserSync({
         server: {
-            baseDir: "src/"
+            baseDir: "build/"
         },
         options: {
             reloadDelay: 250
@@ -49,8 +50,49 @@ gulp.task('images', function (tmp) {
     gulp.src(['src/images/*.jpg', 'src/images/*.png'])
         .pipe(plumber())
         .pipe(imagemin({optimizationLevel: 5, progressive: true, interlaced: true}))
-        .pipe(gulp.dest('src/images'));
+        .pipe(gulp.dest('build/images'));
 });
+
+gulp.task('css', function () {
+    return gulp.src(cssFiles)
+        .pipe(plumber())
+        .pipe(concat('build.css'))
+        .pipe(gulp.dest('build/css'))
+        .pipe(browserSync.reload({stream: true}));
+});
+
+gulp.task('scripts', function () {
+    return gulp.src(['src/js/custom.js', 'src/js/src/**/*.js'])
+        .pipe(plumber())
+        .pipe(concat('build.js'))
+        .on('error', gutil.log)
+        .pipe(gulp.dest('build/js'))
+        .pipe(browserSync.reload({stream: true}));
+});
+
+gulp.task('sass', function () {
+    return gulp.src('src/sass/style.scss')
+        .pipe(plumber({
+            errorHandler: function (err) {
+                console.log(err);
+                this.emit('end');
+            }
+        }))
+        .pipe(sass({
+            errLogToConsole: true,
+            includePaths: [
+                'src/sass'
+            ]
+        }))
+        .pipe(autoprefixer({
+            browsers: autoPrefixBrowserList,
+            cascade: true
+        }))
+        .on('error', gutil.log)
+        .pipe(gulp.dest('build/css'))
+        .pipe(browserSync.reload({stream: true}));
+});
+
 
 gulp.task('images-deploy', function () {
     gulp.src(['src/images/**/*', '!src/images/README'])
@@ -58,13 +100,6 @@ gulp.task('images-deploy', function () {
         .pipe(gulp.dest('dist/images'));
 });
 
-gulp.task('css', function () {
-    return gulp.src(cssFiles)
-        .pipe(plumber())
-        .pipe(concat('build.css'))
-        .pipe(gulp.dest('src/css'))
-        .pipe(browserSync.reload({stream: true}));
-});
 
 gulp.task('css-deploy', function () {
     return gulp.src(cssFiles)
@@ -87,14 +122,6 @@ gulp.task('css-deploy', function () {
         .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('scripts', function () {
-    return gulp.src(['src/js/custom.js', 'src/js/src/**/*.js'])
-        .pipe(plumber())
-        .pipe(concat('build.js'))
-        .on('error', gutil.log)
-        .pipe(gulp.dest('src/js'))
-        .pipe(browserSync.reload({stream: true}));
-});
 
 gulp.task('scripts-deploy', function () {
     return gulp.src(['src/js/custom.js', 'src/js/src/**/*.js'])
@@ -104,31 +131,10 @@ gulp.task('scripts-deploy', function () {
         .pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('sass', function () {
-    return gulp.src('src/sass/style.scss')
-        .pipe(plumber({
-            errorHandler: function (err) {
-                console.log(err);
-                this.emit('end');
-            }
-        }))
-        .pipe(sass({
-            errLogToConsole: true,
-            includePaths: [
-                'src/sass'
-            ]
-        }))
-        .pipe(autoprefixer({
-            browsers: autoPrefixBrowserList,
-            cascade: true
-        }))
-        .on('error', gutil.log)
-        .pipe(gulp.dest('src/css'))
-        .pipe(browserSync.reload({stream: true}));
-});
+
 
 gulp.task('html', function () {
-    return gulp.src('src/*.html')
+    return gulp.src('src/views/renders/**.html')
         .pipe(plumber())
         .pipe(browserSync.reload({stream: true}))
         .on('error', gutil.log);
@@ -136,22 +142,22 @@ gulp.task('html', function () {
 
 gulp.task('html-deploy', function () {
 
-    gulp.src('src/**/*.html')
-        .pipe(plumber())
-        .pipe(version(versionConfig))
-        .pipe(gulp.dest('dist'));
-
-    gulp.src('src/fonts/**/*')
-        .pipe(plumber())
-        .pipe(gulp.dest('dist/fonts'));
-
-    gulp.src('src/svg/**/*')
-        .pipe(plumber())
-        .pipe(gulp.dest('dist/svg'));
-
-    gulp.src('src/images/**/*')
-        .pipe(plumber())
-        .pipe(gulp.dest('dist/images'));
+    // gulp.src('src/**/*.html')
+    //     .pipe(plumber())
+    //     .pipe(version(versionConfig))
+    //     .pipe(gulp.dest('dist'));
+    //
+    // gulp.src('src/fonts/**/*')
+    //     .pipe(plumber())
+    //     .pipe(gulp.dest('dist/fonts'));
+    //
+    // gulp.src('src/svg/**/*')
+    //     .pipe(plumber())
+    //     .pipe(gulp.dest('dist/svg'));
+    //
+    // gulp.src('src/images/**/*')
+    //     .pipe(plumber())
+    //     .pipe(gulp.dest('dist/images'));
 
 });
 
@@ -161,13 +167,32 @@ gulp.task('clean', function () {
     ]);
 });
 
+gulp.task('clean-build', function () {
+    return shell.task([
+        'rm -rf build'
+    ]);
+});
+
+gulp.task('nunjucks', function() {
+
+    return gulp.src('src/views/pages/*.+(nunjucks)')
+        .pipe(nunjucksRender({
+            path: ['src/views/']
+        }))
+        .pipe(plumber())
+        .pipe(gulp.dest('build/'))
+
+});
+
 gulp.task('default', ['browserSync', 'scripts', 'sass', 'css'], function () {
-    gulp.start(['scripts','sass','html','css']);
+    gulp.start(['clean-build','nunjucks','scripts','sass','html','css']);
+    gulp.watch("src/views/**/*.+(html|nunjucks)", ['nunjucks']);
     gulp.watch('src/js/**', ['scripts']);
     gulp.watch('src/css/**', ['css']);
     gulp.watch('src/sass/**', ['sass']);
     gulp.watch('src/images/**', ['images']);
     gulp.watch('src/*.html', ['html']);
+
 });
 
-gulp.task('deploy', gulpSequence('clean', ['scripts-deploy', 'sass', 'images-deploy', 'css-deploy'], 'html-deploy'));
+// gulp.task('deploy', gulpSequence('clean', ['scripts-deploy', 'sass', 'images-deploy', 'css-deploy'], 'html-deploy'));

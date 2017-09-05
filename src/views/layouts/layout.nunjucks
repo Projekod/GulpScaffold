@@ -1,0 +1,19 @@
+<html lang="tr">
+<head>
+
+    {% include "../partials/socialheader.nunjucks" %}
+    <title>{% block title %} {% endblock %}</title>
+
+    <link rel="stylesheet" type="text/css" href="css/build.css">
+
+</head>
+
+<body>
+
+{% block content %}
+{% endblock %}
+
+
+<script type="text/javascript" src="js/build.js"></script>
+</body>
+</html>

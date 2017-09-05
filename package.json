@@ -18,6 +18,8 @@
     "gulp-uglify": "^3.0.0",
     "gulp-uncss": "^1.0.6",
     "gulp-util": "^3.0.8",
-    "gulp-version-number": "^0.1.7"
+    "gulp-version-number": "^0.1.7",
+    "gulp-nunjucks-render": "^2.0.0",
+    "nunjucks": "^3.0.0"
   }
 }

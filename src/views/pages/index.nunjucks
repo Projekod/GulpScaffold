@@ -1,0 +1,11 @@
+{% extends "./layouts/layout.nunjucks" %}
+
+{% block title %}
+    Ana sayfa | Projekod Yazılım Gulp Scaffold
+{% endblock %}
+
+{% block content %}
+
+    Hellow
+
+{% endblock %}
