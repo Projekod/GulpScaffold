@@ -1,4 +1,4 @@
-var app, concat, gulp, gutil, sass, uglify, imagemin, minifyCSS,
+var  concat, gulp, gutil, sass, uglify, imagemin,
     browserSync, autoprefixer, gulpSequence, shell, plumber, cleanCSS, uncss, staticHash,version;
 var autoPrefixBrowserList = ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'];
 
@@ -8,7 +8,6 @@ concat = require('gulp-concat');
 uglify = require('gulp-uglify');
 sass = require('gulp-sass');
 imagemin = require('gulp-imagemin');
-minifyCSS = require('gulp-minify-css');
 browserSync = require('browser-sync');
 autoprefixer = require('gulp-autoprefixer');
 gulpSequence = require('gulp-sequence').use(gulp);
@@ -78,7 +77,6 @@ gulp.task('css-deploy', function () {
         .pipe(uncss({
             html: ['src/*.html']
         }))
-        .pipe(minifyCSS())
         .pipe(cleanCSS({
             compatibility: 'ie8', level: {
                 1: {

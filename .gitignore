@@ -4,3 +4,4 @@ dist
 !dist/.gitkeep
 src/css/style.css
 src/css/build.css
+package-lock.json
