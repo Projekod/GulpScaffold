@@ -6,5 +6,3 @@
 
 - Added Semver Support
 - Addet Nunjucks Theme Engine Support
-
-### 1.4.3
