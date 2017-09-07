@@ -20,7 +20,7 @@ version = require('gulp-version-number');
 nunjucksRender = require('gulp-nunjucks-render');
 
 var cssFiles = [
-    'src/css/inc/bootstrap.min.css',
+    'node_modules/bootstrap/dist/css/bootstrap.css',
     'src/css/inc/font-awesome.min.css',
     'src/css/style.css',
     'src/css/custom.css'
@@ -57,6 +57,13 @@ gulp.task('css', function () {
     return gulp.src(cssFiles)
         .pipe(plumber())
         .pipe(concat('build.css'))
+        .pipe(cleanCSS({
+            compatibility: 'ie8', level: {
+                1: {
+                    specialComments: 0
+                }
+            }
+        }))
         .pipe(gulp.dest('build/css'))
         .pipe(browserSync.reload({stream: true}));
 });
@@ -89,7 +96,7 @@ gulp.task('sass', function () {
             cascade: true
         }))
         .on('error', gutil.log)
-        .pipe(gulp.dest('build/css'))
+        .pipe(gulp.dest('src/css'))
         .pipe(browserSync.reload({stream: true}));
 });
 
