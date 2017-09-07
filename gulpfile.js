@@ -1,5 +1,5 @@
-var  concat, gulp, gutil, sass, uglify, imagemin,
-    browserSync, autoprefixer, gulpSequence, shell, plumber, cleanCSS, uncss, staticHash,version,nunjucksRender;
+var concat, gulp, gutil, sass, uglify, imagemin,
+    browserSync, autoprefixer, gulpSequence, shell, plumber, cleanCSS, uncss, staticHash, version, nunjucksRender;
 var autoPrefixBrowserList = ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'];
 
 gulp = require('gulp');
@@ -132,7 +132,6 @@ gulp.task('scripts-deploy', function () {
 });
 
 
-
 gulp.task('html', function () {
     return gulp.src('src/views/renders/**.html')
         .pipe(plumber())
@@ -173,19 +172,20 @@ gulp.task('clean-build', function () {
     ]);
 });
 
-gulp.task('nunjucks', function() {
+gulp.task('nunjucks', function () {
 
     return gulp.src('src/views/pages/*.+(nunjucks)')
         .pipe(nunjucksRender({
             path: ['src/views/']
         }))
         .pipe(plumber())
-        .pipe(gulp.dest('build/'))
+        .pipe(browserSync.reload({stream: true}))
+        .pipe(gulp.dest('build/'));
 
 });
 
 gulp.task('default', ['browserSync', 'scripts', 'sass', 'css'], function () {
-    gulp.start(['clean-build','nunjucks','scripts','sass','html','css']);
+    gulp.start(['clean-build', 'nunjucks', 'scripts', 'sass', 'html', 'css']);
     gulp.watch("src/views/**/*.+(html|nunjucks)", ['nunjucks']);
     gulp.watch('src/js/**', ['scripts']);
     gulp.watch('src/css/**', ['css']);
