@@ -3,7 +3,10 @@
   "version": "0.0.2",
   "description": "Yet another Gulp scaffolding repository for simple html projects",
   "dependencies": {
-    "bootstrap": "3.3.7"
+    "bootstrap": "3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.2.0",
+    "slick-carousel": "^1.6.0"
   },
   "devDependencies": {
     "browser-sync": "^2.18.13",

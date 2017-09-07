@@ -5,3 +5,4 @@ dist
 src/css/style.css
 src/css/build.css
 package-lock.json
+deploy.temp.js
