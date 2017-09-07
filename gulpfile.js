@@ -57,13 +57,6 @@ gulp.task('css', function () {
     return gulp.src(cssFiles)
         .pipe(plumber())
         .pipe(concat('build.css'))
-        .pipe(cleanCSS({
-            compatibility: 'ie8', level: {
-                1: {
-                    specialComments: 0
-                }
-            }
-        }))
         .pipe(gulp.dest('build/css'))
         .pipe(browserSync.reload({stream: true}));
 });
@@ -150,9 +143,30 @@ gulp.task('copy-assets', function () {
 
 });
 
+gulp.task('deploy', function () {
+    gulp.src(scriptFiles)
+        .pipe(plumber())
+        .pipe(concat('build.js'))
+        .pipe(uglify())
+        .on('error', gutil.log)
+        .pipe(gulp.dest('build/js'));
+
+    gulp.src(cssFiles)
+        .pipe(plumber())
+        .pipe(concat('build.css'))
+        .pipe(cleanCSS({
+            compatibility: 'ie8', level: {
+                1: {
+                    specialComments: 0
+                }
+            }
+        }))
+        .pipe(gulp.dest('build/css'));
+
+});
 
 gulp.task('default', function () {
-    gulp.start(['clean-build', 'nunjucks', 'scripts', 'sass', 'html', 'css','browserSync']);
+    gulp.start(['clean-build', 'nunjucks', 'scripts', 'sass', 'html', 'css', 'browserSync']);
     gulp.watch("src/views/**/*.+(html|nunjucks)", ['nunjucks', 'copy-assets']);
     gulp.watch('src/js/**', ['scripts']);
     gulp.watch('src/css/**', ['css', 'copy-assets']);
