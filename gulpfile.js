@@ -163,6 +163,10 @@ gulp.task('deploy', function () {
         }))
         .pipe(gulp.dest('build/css'));
 
+    gulp.src('build/*.html')
+        .pipe(staticHash({asset: 'static'}))
+        .pipe(gulp.dest('build/'));
+
 });
 
 gulp.task('default', function () {

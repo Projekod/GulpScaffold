@@ -1,5 +1,12 @@
 ## Changelog
 
+### 0.0.5
+
+*14-09-2017*
+
+- Added gulp static asset hash support after deploy
+
+
 ### 0.0.4
 
 *07-09-2017*
