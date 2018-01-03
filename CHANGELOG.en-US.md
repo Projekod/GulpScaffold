@@ -1,5 +1,10 @@
 ## Changelog
 
+### 0.0.6
+*03-01-2018*
+
+- Addet data.json for Nunjucks  
+
 ### 0.0.5
 
 *14-09-2017*

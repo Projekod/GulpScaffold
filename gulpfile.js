@@ -19,6 +19,7 @@ staticHash = require('gulp-static-hash');
 version = require('gulp-version-number');
 nunjucksRender = require('gulp-nunjucks-render');
 
+
 var cssFiles = [
     'node_modules/bootstrap/dist/css/bootstrap.css',
     'node_modules/font-awesome/css/font-awesome.min.css',
@@ -117,9 +118,12 @@ gulp.task('clean-build', function () {
 
 gulp.task('nunjucks', function () {
 
+    delete require.cache[require.resolve('./data.json')];
+
     return gulp.src('src/views/pages/*.+(nunjucks)')
         .pipe(nunjucksRender({
-            path: ['src/views/']
+            path: ['src/views/'],
+            data: require('./data.json')
         }))
         .pipe(plumber())
         .pipe(browserSync.reload({stream: true}))
@@ -177,4 +181,5 @@ gulp.task('default', function () {
     gulp.watch('src/sass/**', ['sass']);
     gulp.watch('src/images/**', ['images', 'copy-assets']);
     gulp.watch('src/*.html', ['html']);
+    gulp.watch('./data.json', ['nunjucks']);
 });

@@ -10,6 +10,12 @@
 
 <body>
 
+<pre>{{ testData }}</pre>
+
+{% for menu in menuler %}
+    <a href="{{ menu.url }}" class="{{ menu.class }}">{{ menu.name }}</a> |
+{% endfor %}
+
 {% block content %}
 {% endblock %}
 
