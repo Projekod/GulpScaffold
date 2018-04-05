@@ -38,3 +38,8 @@
 - Added Semver Support
 - Addet Nunjucks Theme Engine Support
 
+### 0.0.4
+
+*05-04-2017*
+
+- Update gulpfile

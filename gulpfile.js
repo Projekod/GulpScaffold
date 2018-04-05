@@ -148,6 +148,9 @@ gulp.task('copy-assets', function () {
 });
 
 gulp.task('deploy', function () {
+
+    gulp.start(['nunjucks']);
+
     gulp.src(scriptFiles)
         .pipe(plumber())
         .pipe(concat('build.js'))
